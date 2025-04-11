@@ -1,0 +1,70 @@
+---
+title: '엔드유저의 지갑주소 등록/변경'
+description: '엔드유저가 출금을 진행하기 위해서는 최초1회 지갑인증 과정을 거쳐야 합니다. <br />인증된 지갑정보는 고객사와 크로믹스 각각의 서버에서 UID와 함께 관리됩니다. <br />엔드유저가 지갑변경을 위해서는 재 인증을 거쳐야 하며 고객사와 크로믹스는 최신 인증된 지갑정보를 보관합니다.'
+icon: 'map'
+---
+<Tip>
+**Note:**<br /> **1.** 유저가 출금 요청 시, 고객사 서버에 등록된 사용자 지갑 주소와 Crypto PG에 등록된 월렛 주소는<br /> 반드시 일치해야 합니다. **참고:** 
+[출금 프로세스](/essentials/webhook#c-%EC%B6%9C%EA%B8%88-%ED%94%84%EB%A1%9C%EC%84%B8%EC%8A%A4)<br />
+**2.** 엔드유저의 지갑주소 등록/변경 요청이 완료되면 엔드유저의 지갑주소 <br />[등록/변경 웹훅](/essentials/webhook#4-%EC%97%94%EB%93%9C%EC%9C%A0%EC%A0%80%EC%9D%98-%EC%A7%80%EA%B0%91%EC%A3%BC%EC%86%8C-%EB%93%B1%EB%A1%9D%2F%EB%B3%80%EA%B2%BD-%EC%9B%B9%ED%9B%85-wallet-changed-notification) 전송됩니다.
+</Tip>
+
+## 지갑주소 등록/변경을 위한 토큰 생성
+
+## API 정보
+
+| 항목 | 내용 |
+|------|------|
+| **Method** | `POST` |
+| **Dev URL** | `https://dev-token-api.cromix.io/v3/payment/token` |
+| **Production URL** | `https://token-api.cromix.io/v3/payment/token` |
+
+### Headers
+
+요청 시 다음과 같은 헤더를 포함해야 합니다:
+
+```json
+{
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+  "Content-Type": "application/json",
+  "Authorization": "Basic {Project ID}:{API Key}"
+}
+```
+### Request Parameters
+
+| Parameter        | Type         | Required | Description |
+|------------------|--------------|----------|-------------|
+| `type`           | `string`     | ✅       | `wallet` |
+| `userId`         | `string`,`number`    | ✅       | `유저 식별자` |
+
+## API 지갑주소 등록/변경을 위한 토큰 사용(예시)
+
+환경별 URL `BASE_PAYMENT_DOMAIN`:
+
+| 환경 | 언어 | URL |
+|------|------|-----|
+| 개발 (Dev) | 🇰🇷 | `https://dev.payment.cromix.io/payment?token=${token}` |
+| 운영 (Prod) | 🇰🇷 | `https://payment.cromix.io/payment?token=${token}` |
+| 개발 (Dev) | 🇺🇸 | `https://dev.payment.cromix.io/en/payment?token=${token}` |
+| 운영 (Prod) | 🇺🇸 | `https://payment.cromix.io/en/payment?token=${token}` |
+
+```ts
+const handleChangeWallet = async () => {
+    const { token } = await paymentApi.getToken({
+      userId: '1',
+      type: 'wallet',
+    });
+    if (token) {
+      window.open(`${BASE_PAYMENT_DOMAIN}/payment?token=${token}`, '_blank');
+    }
+  };
+  ```
+
+  ## 프로세스
+<Tip>
+**Note:**<br />
+1. 게임에서 엔드유저가 지갑주소 등록/변경 요청합니다. **[참고](/essentials/walletreg#api-%EC%A7%80%EA%B0%91%EC%A3%BC%EC%86%8C-%EB%93%B1%EB%A1%9D%2F%EB%B3%80%EA%B2%BD%EC%9D%84-%EC%9C%84%ED%95%9C-%ED%86%A0%ED%81%B0-%EC%82%AC%EC%9A%A9-%EC%98%88%EC%8B%9C)**
+2. 게임에서 엔드유저가 지갑주소 등록/변경을 요청하면,**지갑주소 등록/변경용 토큰이 생성**되며,<br />해당 토큰을 사용해 **크로믹시 웹에서 지갑주소 등록/변경**이 진행됩니다.
+</Tip>
+![image6.png](/images/image6.png)

@@ -1,0 +1,77 @@
+---
+title: 'Webhook 사용 (예시)'
+description: '웹훅에서 수신한 `notificationType`에 따라 분기 처리하는 서버 코드입니다.<br /> 각 이벤트에 따라 알맞은 DB 작업을 수행합니다.'
+icon: 'code'
+---
+## Webhook Webhook 사용 예시 코드:
+```ts
+public async useWebHook(req: Request, res: Response, next: NextFunction) {
+  try {
+    const notificationType = req.body.notificationType;
+
+    if (notificationType === 'user_validate') {
+      const data = req.body as UserValidateData;
+      const user = await SeqUser.findByPk(data.userId);
+      if (!user) return res.status(404).json({ status: 404, error: 'Not found' });
+      return res.status(200).json({ status: 200, data: { user: { id: data.userId } } });
+    }
+
+    if (notificationType === 'deposit_order_created') {
+      const data = req.body as DepositOrderCreatedData;
+      const { id, ...restData } = data;
+      await SeqPaymentDeposit.create({ ...restData, orderId: id });
+      return res.status(200).json({ status: 200, data });
+    }
+
+    if (notificationType === 'deposit_order_paid') {
+      const data = req.body as DepositOrderPaidData;
+      const { id, ...restData } = data;
+      await SeqPaymentDeposit.update(restData, { where: { orderId: id } });
+      await this.addUserPoint(data.userId, data.initialAmount);
+      return res.status(200).json({ status: 200, data });
+    }
+
+    if (notificationType === 'withdraw_order_created') {
+      const data = req.body as WithdrawOrderCreatedData;
+      const { id, ...restData } = data;
+      await SeqPaymentWithdraw.create({ ...restData, orderId: id });
+      return res.status(200).json({ status: 200, data });
+    }
+
+    if (notificationType === 'withdraw_order_paid') {
+      const data = req.body as WithdrawOrderPaidData;
+      const { id, ...restData } = data;
+      await SeqPaymentWithdraw.update(restData, { where: { orderId: id } });
+      await this.deductUserPoints(data.userId, data.initialAmount);
+      return res.status(200).json({ status: 200, data });
+    }
+
+    if (notificationType === 'withdraw_order_refunded') {
+      const data = req.body as WithdrawOrderRefundedData;
+      const { id, ...restData } = data;
+      await SeqPaymentWithdraw.update(restData, { where: { orderId: id } });
+      await this.subtractPendingWithdrawPoint(data.userId, data.initialAmount);
+      return res.status(200).json({ status: 200, data });
+    }
+
+    if (notificationType === 'withdraw_order_received') {
+      const data = req.body as WithdrawOrderReceivedData;
+      const { id, ...restData } = data;
+      await SeqPaymentWithdraw.update(restData, { where: { orderId: id } });
+      await this.addPendingWithdrawPoint(id, data.userId);
+      return res.status(200).json({ status: 200, data });
+    }
+
+    if (notificationType === 'wallet_changed') {
+      const data = req.body as WalletChangedData;
+      const { userId, walletAddress } = data;
+      await SeqUser.update({ walletAddress }, { where: { id: userId } });
+      return res.status(200).json({ status: 200, data });
+    }
+
+    return res.status(400).json({ status: 400, error: 'Invalid notificationType' });
+  } catch (error) {
+    return res.status(500).json({ status: 500, error: error.message });
+  }
+}
+```

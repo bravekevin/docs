@@ -1,0 +1,90 @@
+---
+title: '결제 토큰의 사용(예시)'
+description: ''
+icon: 'code'
+---
+
+> ⚠️ **주의:**  
+> - 토큰은 발급 후 **30분 이내에 사용**해야 하며, 만료되면 404 에러가 발생합니다.  
+> - 프로젝트에 등록된 **유효한 Project ID와 API Key**가 없는 경우에도 404 에러가 발생할 수 있습니다.
+
+---
+
+### 환경별 결제 페이지 URL
+
+| 환경 | 언어 | URL |
+|------|------|-----|
+| 개발 (Dev) | 🇰🇷 | `https://dev.payment.cromix.io/payment?token=${token}` |
+| 운영 (Prod) | 🇰🇷 | `https://payment.cromix.io/payment?token=${token}` |
+| 개발 (Dev) | 🇺🇸 | `https://dev.payment.cromix.io/en/payment?token=${token}` |
+| 운영 (Prod) | 🇺🇸 | `https://payment.cromix.io/en/payment?token=${token}` |
+
+---
+
+## 출금 요청 (withdraw)
+
+```ts
+const handleWithdraw = async () => {
+  const { token } = await paymentApi.getToken({
+    amount: amount.toString(),
+    return_url: 'http://yourgamedomain.com',
+    type: 'withdraw',
+  });
+
+  if (token) {
+    window.open(`https://dev.payment.cromix.io/payment?token=${token}`, '_blank');
+  }
+};
+```
+
+## 입금 요청 (deposit)
+
+```ts
+const handleDeposit = async () => {
+  const { token } = await paymentApi.getToken({
+    amount: amount.toString(),
+    return_url: 'http://yourgamedomain.com',
+    type: 'deposit',
+  });
+
+  if (token) {
+    window.open(`https://dev.payment.cromix.io/payment?token=${token}`, '_blank');
+  }
+};
+```
+
+## 서버 코드 (Node.js Express 예시)
+```ts
+public async getToken
+(req: Request, res: Response, next: NextFunction, data: UserJWTData) 
+{
+  const { error, value } = Joi.object({
+    return_url: Joi.string().required(),
+    amount: Joi.string().required(),
+    type: Joi.string().required(),
+  }).validate(req.body);
+
+  if (error) return res.status(400).json({ message: error.message });
+
+  const [user] = await Promise.all([
+    SeqUser.findByPk(data.id),
+  ]);
+
+  const { data } = await axios.post(
+    "https://dev-token-api.cromix.io/v3/payment/token",
+    {
+      ...value,
+      userId: user.id,
+      walletAddress: user.walletAddress,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Basic {Project ID}:{API Key}"
+      }
+    }
+  );
+
+  return res.json(data);
+}
+```

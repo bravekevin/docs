@@ -1,107 +1,104 @@
 ---
-title: 'Development'
-description: 'Preview changes locally to update your docs'
+title: '지갑에 USDT/USDC 토큰 추가하기'
+description: 'MetaMask, Phantom, Rabby 지갑에서 USDT/USDC 토큰을 추가하는 방법을 안내합니다.'
 ---
 
-<Info>
-  **Prerequisite**: Please install Node.js (version 19 or higher) before proceeding. <br />
-  Please upgrade to ```docs.json``` before proceeding and delete the legacy ```mint.json``` file.
-</Info>
+> ⚠️ **USDT와 같은 토큰은 기본적으로 표시되지 않기 때문에**, 직접 **토큰 컨트랙트 주소**를 입력해서 추가해야 합니다.
 
-Follow these steps to install and run Mintlify on your operating system:
+---
 
-**Step 1**: Install Mintlify:
+##  **MetaMask 지갑에 USDT 토큰 추가하기**
 
-<CodeGroup>
+1. MetaMask 지갑을 엽니다 (웹 확장 또는 모바일 앱)
+2. 네트워크를 선택합니다 (예: Ethereum, Arbitrum, Sepolia 등)
+3. **토큰 탭** > **"토큰 가져오기 (Import Token)"** 클릭
+4. 아래의 **USDT 컨트랙트 주소**를 복사해 입력
+5. 자동으로 심볼 및 소수점 정보가 채워지고, **확인 후 저장**합니다
 
-  ```bash npm
-  npm i -g mintlify
-  ```
+### 테스트넷 (Testnet)
 
-```bash yarn
-yarn global add mintlify
-```
+| 네트워크 | **USDT 주소** | **USDC 주소** |
+|----------|----------------------------|----------------------------|
+| **Sepolia** | `0xaA8E23Fb1079EA71e0a56F48a2aA51851D8433D0` | `0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238` |
+| **Arbitrum Sepolia** | `0x6a41aBbDc90A273c72364fB20A65E37F72Fad7EB` | `0x75faf114eafb1BDbe2F0316DF893fd58CE46AA4d` |
+| **Base Sepolia** | `0xda62DF423a068471008bFAa1f9E66a89c0AADb3a` | `0x036CbD53842c5426634e7929541eC2318f3dCF7e` |
+| **Amoy (Polygon Testnet)** | `0x5a94f03A45768c7eF20f1A26B3857C5172A1d1b6` | `0x41E94Eb019C0762f9Bfcf9Fb1E58725BfB0e7582` |
 
-</CodeGroup>
 
-**Step 2**: Navigate to the docs directory (where the `docs.json` file is located) and execute the following command:
+### 메인넷 (Mainnet)
 
-```bash
-mintlify dev
-```
+| 네트워크 | **USDT 주소** | **USDC 주소** |
+|----------|----------------------------|----------------------------|
+| **Ethereum** | `0xdAC17F958D2ee523a2206206994597C13D831ec7` | `0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48` |
+| **Arbitrum One** | `0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9` | `0xaf88d065e77c8cC2239327C5EDb3A432268e5831` |
+| **Base** | `0xfde4C96c8593536E31F229EA8f37b2ADa2699bb2` | `0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913` |
+| **Polygon** | `0xc2132D05D31c914a87C6611C10748AEb04B58e8F` | `0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359` |
 
-A local preview of your documentation will be available at `http://localhost:3000`.
+<CardGroup cols={2}>
+  <Card
+    title="MetaMask에서 토큰 추가하기"
+    icon="wallet"
+    href="https://support.metamask.io/hc/en-us/articles/360015489031"
+  >
+    MetaMask에서 사용자 정의 토큰을 추가하는 방법
+  </Card>
+</CardGroup>
 
-### Custom Ports
+---
 
-By default, Mintlify uses port 3000. You can customize the port Mintlify runs on by using the `--port` flag. To run Mintlify on port 3333, for instance, use this command:
+##  **Phantom 지갑에 USDT 토큰 추가하기**
 
-```bash
-mintlify dev --port 3333
-```
+1. Phantom 지갑을 엽니다 (웹 확장 또는 모바일 앱)
+2. 우측 상단 메뉴 > **"Manage Token List" (토큰 목록 관리)** 클릭
+3. EVM 네트워크 선택 (예: Ethereum, Polygon, Base 등)
+4. **"Add custom token"** 또는 **"Import Token"** 선택
+5. 아래 컨트랙트 주소 입력
+6. 자동으로 토큰 정보가 채워지고 저장됩니다
 
-If you attempt to run Mintlify on a port that's already in use, it will use the next available port:
+### 테스트넷 (Testnet)
+> ⚠️ **Amoy 네트워크**는 Phantom 지갑에서 지원하지 않습니다. <br />현재 Phantom 지갑에서는 **Amoy** 테스트넷에 대한 USDT 토큰을 추가할 수 없습니다.<br />
 
-```md
-Port 3000 is already in use. Trying 3001 instead.
-```
+| 네트워크 | **USDT 주소** | **USDC 주소** |
+|----------|----------------------------|----------------------------|
+| **Sepolia** | `0xaA8E23Fb1079EA71e0a56F48a2aA51851D8433D0` | `0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238` |
+| **Arbitrum Sepolia** | `0x6a41aBbDc90A273c72364fB20A65E37F72Fad7EB` | `0x75faf114eafb1BDbe2F0316DF893fd58CE46AA4d` |
+| **Base Sepolia** | `0xda62DF423a068471008bFAa1f9E66a89c0AADb3a` | `0x036CbD53842c5426634e7929541eC2318f3dCF7e` |
 
-## Mintlify Versions
+### 메인넷 (Mainnet)
 
-Please note that each CLI release is associated with a specific version of Mintlify. If your local website doesn't align with the production version, please update the CLI:
+| 네트워크 | **USDT 주소** | **USDC 주소** |
+|----------|----------------------------|----------------------------|
+| **Ethereum** | `0xdAC17F958D2ee523a2206206994597C13D831ec7` | `0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48` |
+| **Arbitrum One** | `0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9` | `0xaf88d065e77c8cC2239327C5EDb3A432268e5831` |
+| **Base** | `0xfde4C96c8593536E31F229EA8f37b2ADa2699bb2` | `0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913` |
+| **Polygon** | `0xc2132D05D31c914a87C6611C10748AEb04B58e8F` | `0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359` |
 
-<CodeGroup>
+<CardGroup cols={2}>
+  <Card
+    title="Phantom에서 토큰 추가하기"
+    icon="wallet"
+    href="https://help.phantom.com/hc/en-us/articles/27309470600851-How-do-I-add-a-token"
+  >
+    Phantom에서 EVM 토큰을 수동으로 추가하는 방법
+  </Card>
+</CardGroup>
 
-```bash npm
-npm i -g mintlify@latest
-```
+---
 
-```bash yarn
-yarn global upgrade mintlify
-```
+##  **Rabby 지갑에 USDT 토큰 추가하기**
 
-</CodeGroup>
+1. Rabby 지갑을 엽니다 (웹 확장 또는 모바일 앱)
+2. 네트워크를 선택합니다 (예: Ethereum, Arbitrum, Polygon 등)
+3. **토큰은 자동으로 표시**되므로 별도로 토큰을 수동으로 추가할 필요 없이 사용 가능합니다.
 
-## Validating Links
+> 📝 Rabby는 사용자가 주소를 가져오기만 하면 **자동으로** 네트워크에 맞는 **모든 토큰을 표시**해 주기 때문에 추가적인 설정 없이 바로 사용할 수 있습니다.
 
-The CLI can assist with validating reference links made in your documentation. To identify any broken links, use the following command:
-
-```bash
-mintlify broken-links
-```
-
-## Deployment
-
-<Tip>
-  Unlimited editors available under the [Pro
-  Plan](https://mintlify.com/pricing) and above.
-</Tip>
-
-If the deployment is successful, you should see the following:
-
-<Frame>
-  <img src="/images/checks-passed.png" style={{ borderRadius: '0.5rem' }} />
-</Frame>
-
-## Code Formatting
-
-We suggest using extensions on your IDE to recognize and format MDX. If you're a VSCode user, consider the [MDX VSCode extension](https://marketplace.visualstudio.com/items?itemName=unifiedjs.vscode-mdx) for syntax highlighting, and [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) for code formatting.
-
-## Troubleshooting
-
-<AccordionGroup>
-  <Accordion title='Error: Could not load the "sharp" module using the darwin-arm64 runtime'>
-
-    This may be due to an outdated version of node. Try the following:
-    1. Remove the currently-installed version of mintlify: `npm remove -g mintlify`
-    2. Upgrade to Node v19 or higher.
-    3. Reinstall mintlify: `npm install -g mintlify`
-  </Accordion>
-
-  <Accordion title="Issue: Encountering an unknown error">
-  
-    Solution: Go to the root of your device and delete the \~/.mintlify folder. Afterwards, run `mintlify dev` again.
-  </Accordion>
-</AccordionGroup>
-
-Curious about what changed in the CLI version? [Check out the CLI changelog.](https://www.npmjs.com/package/mintlify?activeTab=versions)
+<CardGroup cols={2}>
+  <Card
+    title="Rabby 공식 문서"
+    icon="wallet"
+    href="https://support.rabby.io/hc/en-us/articles/11319672399247-List-of-supported-chains-and-tokens"
+  >
+    Rabby 지갑의 토큰 관리 기능 소개
+  </Card>
+</CardGroup>

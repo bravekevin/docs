@@ -1,0 +1,73 @@
+---
+title: '결제를 위한 토큰 생성'
+description: 'Cromix 결제 시스템에서 결제에 사용할 수 있는 토큰을 생성하는 API를 안내합니다.'
+icon: 'gear'
+---
+
+## 개요
+
+크립토PG 시스템에서는 사용자가 결제에 사용할 **토큰을 사전 생성**해야 합니다. 이 토큰은 고유한 결제 요청을 식별하고, 이후 결제 진행 및 완료 처리를 연동하기 위한 키 역할을 합니다.
+
+## API 정보
+
+| 항목 | 내용 |
+|------|------|
+| **Method** | `POST` |
+| **Dev URL** | `https://dev-token-api.cromix.io/v3/payment/token` |
+| **Production URL** | `https://token-api.cromix.io/v3/payment/token` |
+
+### Headers
+
+요청 시 다음과 같은 헤더를 포함해야 합니다:
+
+```json
+{
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+  "Content-Type": "application/json",
+  "Authorization": "Basic {Project ID}:{API Key}"
+}
+```
+### Request Parameters
+
+| Parameter        | Type         | Required | Description |
+|------------------|--------------|----------|-------------|
+| `amount`         | `string`     | ✅       | 결제 금액 (USD 기준) |
+| `type`           | `string`     | ✅       | 결제 유형: `withdraw` 또는 `deposit` |
+| `userId`         | `string` or `number` | ✅ | 유저 식별자 |
+| `return_url`     | `string`     | ✅       | 결제 완료 후 엔드유저가 이동할 페이지 주소 |
+| `product_name`   | `string(50)` | -       | 상품명 |
+| `product_amount` | `number`     | -       | 상품 수량 |
+| `walletAddress`  | `string`     | -       | 유저 지갑 주소 (선택값) |
+
+> ⚠️`return_url`은 결제 완료 후 유저를 다시 리디렉션할 페이지로, 프론트엔드 측 경로(URL)를 의미합니다.
+
+---
+### cURL 예시
+
+아래는 개발 환경에서 결제 토큰을 생성하는 `curl` 요청 예제입니다:
+
+```bash
+curl -X POST https://dev-token-api.cromix.io/v3/payment/token \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Basic {Base64(ProjectID:APIKey)}" \
+  -d '{
+    "amount": "49.99",
+    "type": "deposit",
+    "userId": "user_42",
+    "return_url": "https://yourapp.com/payment/success",
+    "product_name": "Pro Subscription",
+    "product_amount": 1,
+    "walletAddress": "0x0Dcd2F752394c41875e259e00bb44fd505297caf"
+  }'
+```
+### Response 예시
+
+요청이 성공하면 다음과 같은 형태로 결제 토큰이 반환됩니다:
+
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEwLCJpbml0aWFsQW1vdW50IjoiMSIsInJldHVybl91cmwiOiJodHRwczovL21vbnN0ZXJnYW1lLmNyb21peC5pbyIsInByb2plY3RJZCI6MTA5LCJ0eXBlIjoiZGVwb3NpdCIsIndhbGxldEFkZHJlc3MiOiIweDEzNjY5QTMyNTdDNTYxM0M3NUIzMzU2MDExNjY3QTZDNDlmMzE3RWIiLCJvcmRlcklkIjo3OTAsImlhdCI6MTc0NDM0OTMyNSwiZXhwIjoxNzQ0MzUxMTI1fQ.pktPmfEcHXXliyV23bg4np3b8XpnNQFeLT5ww-6vtLE"
+}
+```
+
