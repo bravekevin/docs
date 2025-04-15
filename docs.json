@@ -89,7 +89,7 @@
   },  
   "logo": {
     "light": "/images/logo.png",
-    "dark": "/images/logo.png"
+    "dark": "/images/logo_white.png"
   },
   "navbar": {
     "links": [
