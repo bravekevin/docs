@@ -13,8 +13,7 @@ icon: 'gear'
 | 항목 | 내용 |
 |------|------|
 | **Method** | `POST` |
-| **Dev URL** | `https://dev-token-api.cromix.io/v3/payment/token` |
-| **Production URL** | `https://token-api.cromix.io/v3/payment/token` |
+| **Production URL** | `https://payapi.cromix.io/payment/token` |
 
 ### Headers
 
@@ -25,7 +24,7 @@ icon: 'gear'
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
   "Content-Type": "application/json",
-  "Authorization": "Basic {Project ID}:{API Key}"
+  "Authorization": "encodeBasicAuth {Project ID}:{API Key}"
 }
 ```
 ### Request Parameters
@@ -48,7 +47,7 @@ icon: 'gear'
 아래는 개발 환경에서 결제 토큰을 생성하는 `curl` 요청 예제입니다:
 
 ```bash
-curl -X POST https://dev-token-api.cromix.io/v3/payment/token \
+curl -X POST https://payapi.cromix.io/payment/token \
   -H "Content-Type: application/json" \
   -H "Authorization: Basic {Base64(ProjectID:APIKey)}" \
   -d '{

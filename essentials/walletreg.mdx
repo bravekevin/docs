@@ -16,8 +16,7 @@ icon: 'wallet'
 | 항목 | 내용 |
 |------|------|
 | **Method** | `POST` |
-| **Dev URL** | `https://dev-token-api.cromix.io/v3/payment/token` |
-| **Production URL** | `https://token-api.cromix.io/v3/payment/token` |
+| **Production URL** | `https://payapi.cromix.io/payment/token` |
 
 ### Headers
 
@@ -44,10 +43,8 @@ icon: 'wallet'
 
 | 환경 | 언어 | URL |
 |------|------|-----|
-| 개발 (Dev) | 🇰🇷 | `https://dev.payment.cromix.io/payment?token=${token}` |
-| 운영 (Prod) | 🇰🇷 | `https://payment.cromix.io/payment?token=${token}` |
-| 개발 (Dev) | 🇺🇸 | `https://dev.payment.cromix.io/en/payment?token=${token}` |
-| 운영 (Prod) | 🇺🇸 | `https://payment.cromix.io/en/payment?token=${token}` |
+| 운영 (Prod) | 🇰🇷 | `https://pay.cromix.io/payment?token=${token}` |
+| 운영 (Prod) | 🇺🇸 | `https://pay.cromix.io/en/payment?token=${token}` |
 
 ```ts
 const handleChangeWallet = async () => {

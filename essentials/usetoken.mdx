@@ -14,10 +14,8 @@ icon: 'code'
 
 | 환경 | 언어 | URL |
 |------|------|-----|
-| 개발 (Dev) | 🇰🇷 | `https://dev.payment.cromix.io/payment?token=${token}` |
-| 운영 (Prod) | 🇰🇷 | `https://payment.cromix.io/payment?token=${token}` |
-| 개발 (Dev) | 🇺🇸 | `https://dev.payment.cromix.io/en/payment?token=${token}` |
-| 운영 (Prod) | 🇺🇸 | `https://payment.cromix.io/en/payment?token=${token}` |
+| 운영 (Prod) | 🇰🇷 | `https://payapi.cromix.io/payment?token=${token}` |
+| 운영 (Prod) | 🇺🇸 | `https://payapi.cromix.io/en/payment?token=${token}` |
 
 ---
 
@@ -32,7 +30,7 @@ const handleWithdraw = async () => {
   });
 
   if (token) {
-    window.open(`https://dev.payment.cromix.io/payment?token=${token}`, '_blank');
+    window.open(`https://pg.cromix.io/payment?token=${token}`, '_blank');
   }
 };
 ```
@@ -48,7 +46,7 @@ const handleDeposit = async () => {
   });
 
   if (token) {
-    window.open(`https://dev.payment.cromix.io/payment?token=${token}`, '_blank');
+    window.open(`https://pg.cromix.io/payment?token=${token}`, '_blank');
   }
 };
 ```
@@ -71,7 +69,7 @@ public async getToken
   ]);
 
   const { data } = await axios.post(
-    "https://dev-token-api.cromix.io/v3/payment/token",
+    "https://pg.cromix.io/v3/payment/token",
     {
       ...value,
       userId: user.id,

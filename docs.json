@@ -14,67 +14,7 @@
         "tab": "Crypto PG Guide",
         "groups": [
           {
-            "group": "크립토PG 결제연동: Web3사전준비",
-            "pages": [
-              "introduction",
-              "introduction2",
-              "development",
-              "development2"
-            ]
-          },
-          {
             "group": "크립토PG 결제연동 가이드",
-            "pages": [
-              "essentials/createtoken",
-              "essentials/usetoken",
-              "essentials/webhook",
-              "essentials/webhookuse",
-              "essentials/walletreg"
-            ]
-          }
-        ]
-      },
-      {
-        "tab": "Token Launchpad Guide",
-        "groups": [
-          {
-            "group": "Launchpad",
-            "pages": [
-              "essentials/createtoken",
-              "essentials/usetoken",
-              "essentials/webhook",
-              "essentials/webhookuse",
-              "essentials/walletreg"
-            ]
-          },
-          {
-            "group": "런치패드",
-            "pages": [
-              "essentials/createtoken",
-              "essentials/usetoken",
-              "essentials/webhook",
-              "essentials/webhookuse",
-              "essentials/walletreg"
-
-            ]
-          }
-        ]
-      },
-      {
-        "tab": "NFT Console Guide",
-        "groups": [
-          {
-            "group": "NFT",
-            "pages": [
-              "essentials/createtoken",
-              "essentials/usetoken",
-              "essentials/webhook",
-              "essentials/webhookuse",
-              "essentials/walletreg"
-            ]
-          },
-          {
-            "group": "NFT",
             "pages": [
               "essentials/createtoken",
               "essentials/usetoken",
